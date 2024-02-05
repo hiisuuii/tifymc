@@ -1,6 +1,7 @@
 package hisui.tifymc;
 
 import hisui.tifymc.annotation.ConfigurableMixin;
+import io.wispforest.owo.config.Option;
 import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AnnotationNode;
@@ -13,6 +14,8 @@ import org.spongepowered.asm.util.Annotations;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+
+import static hisui.tifymc.ThereIFixedYourMinecraft.CONFIG;
 
 public class TIFYMCMixinPlugin implements IMixinConfigPlugin {
 
@@ -30,15 +33,16 @@ public class TIFYMCMixinPlugin implements IMixinConfigPlugin {
 
         for (AnnotationNode node : annotationNodes) {
             if (node.desc.equals(Type.getDescriptor(ConfigurableMixin.class))) {
-                String modid = Annotations.getValue(node, "configOption");
+                String configOption = Annotations.getValue(node, "configOption");
                 boolean applyIfPresent = Annotations.getValue(node, "applyIfPresent", Boolean.TRUE);
 
                 // TODO: make checks use OwO config options
-                if (isModLoaded(modid)) {
-                    ThereIFixedYourMinecraft.LOGGER.debug("BetterTrimsMixinPlugin: " + className + " is" + (applyIfPresent ? " " : " not ") + "being applied because " + modid + " is loaded");
+                if((boolean)CONFIG.optionForKey(new Option.Key(configOption)).value())
+                if (isModLoaded(configOption)) {
+                    ThereIFixedYourMinecraft.LOGGER.debug("BetterTrimsMixinPlugin: " + className + " is" + (applyIfPresent ? " " : " not ") + "being applied because " + configOption + " is loaded");
                     return applyIfPresent;
                 } else {
-                    ThereIFixedYourMinecraft.LOGGER.debug("BetterTrimsMixinPlugin: " + className + " is" + (!applyIfPresent ? " " : " not ") + "being applied because " + modid + " is not loaded");
+                    ThereIFixedYourMinecraft.LOGGER.debug("BetterTrimsMixinPlugin: " + className + " is" + (!applyIfPresent ? " " : " not ") + "being applied because " + configOption + " is not loaded");
                     return !applyIfPresent;
                 }
             }

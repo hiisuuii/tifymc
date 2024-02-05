@@ -3,7 +3,7 @@
 	"package": "hisui.tifymc.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ExampleMixin"
+      "EdibleGlisteringMelonMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

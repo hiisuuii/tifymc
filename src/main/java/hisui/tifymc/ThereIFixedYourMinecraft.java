@@ -1,5 +1,6 @@
 package hisui.tifymc;
 
+import hisui.tifymc.config.MainConfigWrapper;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -11,11 +12,13 @@ public class ThereIFixedYourMinecraft implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("tifymc");
 
+	public static final MainConfigWrapper CONFIG = MainConfigWrapper.createAndLoad();
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
+		// Proceed with mild caution
 
 		LOGGER.info("Hello Fabric world!");
 	}
