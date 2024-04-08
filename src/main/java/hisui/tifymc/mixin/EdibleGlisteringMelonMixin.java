@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Slice;
 
 @Mixin(Items.class)
-@ConfigurableMixin(configOption = "edibleGlisteringMelon")
+@ConfigurableMixin(configName = "edibleGlisteringMelon")
 public class EdibleGlisteringMelonMixin {
 	@ModifyArg(
 		method = "<clinit>",

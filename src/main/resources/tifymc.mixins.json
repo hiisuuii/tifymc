@@ -5,6 +5,7 @@
 	"mixins": [
       "EdibleGlisteringMelonMixin"
 	],
+	"plugin": "hisui.tifymc.TIFYMCMixinPlugin",
 	"injectors": {
 		"defaultRequire": 1
 	}

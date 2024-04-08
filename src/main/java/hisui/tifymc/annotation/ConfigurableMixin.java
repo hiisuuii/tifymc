@@ -13,6 +13,4 @@ import java.lang.annotation.Target;
 public @interface ConfigurableMixin {
 
     String configName();
-
-    boolean applyIfPresent() default true;
 }

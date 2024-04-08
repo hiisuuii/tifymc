@@ -13,46 +13,39 @@ import org.spongepowered.asm.util.Annotations;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static hisui.tifymc.ThereIFixedYourMinecraft.CONFIG;
 
 public class TIFYMCMixinPlugin implements IMixinConfigPlugin {
 
-
-
-    public static boolean isModLoaded(String modid) {
-        return FabricLoader.getInstance().isModLoaded(modid);
-    }
     public static boolean testClass(String className) {
-        try{
-        List<AnnotationNode> annotationNodes = MixinService.getService()
-                .getBytecodeProvider()
-                .getClassNode(className).visibleAnnotations;
-        if (annotationNodes == null) return true;
+        try {
+            List<AnnotationNode> annotationNodes = MixinService.getService()
+                    .getBytecodeProvider()
+                    .getClassNode(className).visibleAnnotations;
+            if (annotationNodes == null) return true;
 
-        for (AnnotationNode node : annotationNodes) {
-            if (node.desc.equals(Type.getDescriptor(ConfigurableMixin.class))) {
-                String configOption = Annotations.getValue(node, "configOption");
-                boolean applyIfPresent = Annotations.getValue(node, "applyIfPresent", Boolean.TRUE);
+            for (AnnotationNode node : annotationNodes) {
+                if (node.desc.equals(Type.getDescriptor(ConfigurableMixin.class))) {
+                    String configOption = Annotations.getValue(node, "configOption");
 
-                // TODO: make checks use OwO config options
-                if((boolean)CONFIG.optionForKey(new Option.Key(configOption)).value())
-                if (isModLoaded(configOption)) {
-                    ThereIFixedYourMinecraft.LOGGER.debug("BetterTrimsMixinPlugin: " + className + " is" + (applyIfPresent ? " " : " not ") + "being applied because " + configOption + " is loaded");
-                    return applyIfPresent;
-                } else {
-                    ThereIFixedYourMinecraft.LOGGER.debug("BetterTrimsMixinPlugin: " + className + " is" + (!applyIfPresent ? " " : " not ") + "being applied because " + configOption + " is not loaded");
-                    return !applyIfPresent;
+                    if(CONFIG.optionForKey(new Option.Key(configOption)) != null){
+                        Option.BoundField<?> field = CONFIG.optionForKey(new Option.Key(configOption)).backingField();
+                        if(field != null){
+                            return (boolean)field.getValue();
+                        }
+                    }
                 }
             }
+        } catch (ClassNotFoundException | IOException e) {
+            ThereIFixedYourMinecraft.LOGGER.error("BetterTrimsMixinPlugin: Failed to load class " + className + ", it will not be applied", e);
+            return false;
         }
-    } catch (ClassNotFoundException | IOException e) {
-        ThereIFixedYourMinecraft.LOGGER.error("BetterTrimsMixinPlugin: Failed to load class " + className + ", it will not be applied", e);
-        return false;
-    }
         return true;
     }
+
     @Override
     public void onLoad(String mixinPackage) {
 
@@ -65,7 +58,7 @@ public class TIFYMCMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        return false;
+        return testClass(mixinClassName);
     }
 
     @Override
