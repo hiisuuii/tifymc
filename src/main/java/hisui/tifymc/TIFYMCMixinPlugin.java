@@ -29,7 +29,7 @@ public class TIFYMCMixinPlugin implements IMixinConfigPlugin {
 
             for (AnnotationNode node : annotationNodes) {
                 if (node.desc.equals(Type.getDescriptor(ConfigurableMixin.class))) {
-                    String configOption = Annotations.getValue(node, "configOption");
+                    String configOption = Annotations.getValue(node, "configName");
 
                     if(CONFIG.optionForKey(new Option.Key(configOption)) != null){
                         Option.BoundField<?> field = CONFIG.optionForKey(new Option.Key(configOption)).backingField();
@@ -40,7 +40,7 @@ public class TIFYMCMixinPlugin implements IMixinConfigPlugin {
                 }
             }
         } catch (ClassNotFoundException | IOException e) {
-            ThereIFixedYourMinecraft.LOGGER.error("BetterTrimsMixinPlugin: Failed to load class " + className + ", it will not be applied", e);
+            ThereIFixedYourMinecraft.LOGGER.error("TIFYMCMixinPlugin: Failed to load class " + className + ", it will not be applied", e);
             return false;
         }
         return true;

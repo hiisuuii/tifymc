@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Slice;
 
 @Mixin(Items.class)
 @ConfigurableMixin(configName = "edibleGlisteringMelon")
-public class EdibleGlisteringMelonMixin {
+public abstract class EdibleGlisteringMelonMixin {
 	@ModifyArg(
 		method = "<clinit>",
 		slice = @Slice(
