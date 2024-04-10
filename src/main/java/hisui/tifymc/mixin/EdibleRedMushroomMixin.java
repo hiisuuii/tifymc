@@ -1,6 +1,5 @@
 package hisui.tifymc.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import hisui.tifymc.annotation.ConfigurableMixin;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
