@@ -6,6 +6,7 @@
     "EdibleBrownMushroomMixin",
     "EdibleGlisteringMelonMixin",
     "EdibleRedMushroomMixin",
+    "GlowBerriesGiveGlowingMixin",
     "PistonClunkSoundMixin"
   ],
   "plugin": "hisui.tifymc.TIFYMCMixinPlugin",
