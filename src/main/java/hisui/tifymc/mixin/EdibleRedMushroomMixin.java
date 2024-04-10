@@ -27,11 +27,6 @@ public abstract class EdibleRedMushroomMixin {
                     new StatusEffectInstance(StatusEffects.POISON, 120, 2), 1).statusEffect(
                             new StatusEffectInstance(StatusEffects.NAUSEA, 200), 1).build()
             );
-        } else if(block == Blocks.BROWN_MUSHROOM){
-            return original.food(new FoodComponent.Builder().hunger(2).saturationModifier(0).statusEffect(
-                    new StatusEffectInstance(StatusEffects.SLOWNESS, 120, 1), 1).statusEffect(
-                    new StatusEffectInstance(StatusEffects.NAUSEA, 200), 1).build()
-            );
         }
         return original;
     }
