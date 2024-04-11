@@ -7,4 +7,5 @@ public class MainConfigModel {
     public boolean edibleGlisteringMelon = true;
     public boolean edibleRedMushroom = true;
     public boolean edibleBrownMushroom = true;
+    public boolean glowingGlowBerries = true;
 }
